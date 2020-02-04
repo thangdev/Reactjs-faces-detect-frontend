@@ -18,14 +18,17 @@ class Signin extends React.Component {
   };
 
   onSubmitSignIn = async () => {
-    const response = await fetch("http://localhost:4646/signin", {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: this.state.signInEmail,
-        password: this.state.signInPassword
-      })
-    });
+    const response = await fetch(
+      "https://stormy-forest-17045.herokuapp.com/signin",
+      {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: this.state.signInEmail,
+          password: this.state.signInPassword
+        })
+      }
+    );
     const user = await response.json();
     if (user.id) {
       this.props.loadUser(user);

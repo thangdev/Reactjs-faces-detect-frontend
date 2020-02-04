@@ -4,7 +4,6 @@ import FaceRecognition from "./components/FaceRecognition/FaceRecognition";
 import Navigation from "./components/Navigation/Navigation";
 import Signin from "./components/Signin/Signin";
 import Register from "./components/Register/Register";
-import Logo from "./components/Logo/Logo";
 import ImageLinkForm from "./components/ImageLinkForm/ImageLinkForm";
 import Rank from "./components/Rank/Rank";
 import "./App.css";
@@ -81,23 +80,29 @@ class App extends Component {
     try {
       this.setState({ imageUrl: this.state.input });
       // fetch face api to get point position
-      const response = await fetch("http://localhost:4646/imageurl", {
-        method: "post",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          input: this.state.input
-        })
-      });
+      const response = await fetch(
+        "https://stormy-forest-17045.herokuapp.com/imageurl",
+        {
+          method: "post",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            input: this.state.input
+          })
+        }
+      );
       const data = await response.json();
       if (data) {
         // increase number of entries
-        const response = await fetch("http://localhost:4646/image", {
-          method: "put",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            id: this.state.user.id
-          })
-        });
+        const response = await fetch(
+          "https://stormy-forest-17045.herokuapp.com/image",
+          {
+            method: "put",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              id: this.state.user.id
+            })
+          }
+        );
         const count = await response.json();
         if (count) {
           this.setState(Object.assign(this.state.user, { entries: count }));
@@ -129,7 +134,7 @@ class App extends Component {
         />
         {route === "home" ? (
           <div>
-            <Logo />
+            
             <Rank
               name={this.state.user.name}
               entries={this.state.user.entries}
