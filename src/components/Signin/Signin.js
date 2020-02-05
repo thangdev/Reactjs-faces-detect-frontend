@@ -18,6 +18,7 @@ class Signin extends React.Component {
   };
 
   onSubmitSignIn = async () => {
+    this.setState({signInStatus: "Please wait!"})
     const response = await fetch(
       "https://stormy-forest-17045.herokuapp.com/signin",
       {
@@ -31,6 +32,7 @@ class Signin extends React.Component {
     );
     const user = await response.json();
     if (user.id) {
+      this.setState({ signInStatus: "Sign In" });
       this.props.loadUser(user);
       this.props.onRouteChange("home");
     }
@@ -74,7 +76,7 @@ class Signin extends React.Component {
                 onClick={this.onSubmitSignIn}
                 className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
                 type="submit"
-                value="Sign in"
+                value={this.state.signInStatus}
               />
             </div>
             <div className="lh-copy mt3">

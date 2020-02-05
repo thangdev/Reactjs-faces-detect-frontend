@@ -33,7 +33,9 @@ const initialState = {
     entries: 0,
     joined: ""
   },
-  status: "Detect"
+  status: "Detect",
+  signInStatus: "Sign In",
+  registerStatus: "Register"
 };
 
 class App extends Component {
@@ -151,9 +153,10 @@ class App extends Component {
             <FaceRecognition boxes={boxes} imageUrl={imageUrl} />
           </div>
         ) : route === "signin" ? (
-          <Signin loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
+          <Signin signInStatus={this.state.signInStatus} loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
         ) : (
           <Register
+            registerStatus={this.state.registerStatus}
             loadUser={this.loadUser}
             onRouteChange={this.onRouteChange}
           />

@@ -23,6 +23,7 @@ class Register extends React.Component {
   }; 
 
   onSubmitSignIn = async () => {
+    this.setState({ registerStatus: "Please wait!" });
     const response = await fetch(
       "https://stormy-forest-17045.herokuapp.com/register",
       {
@@ -37,12 +38,14 @@ class Register extends React.Component {
     );
     const user = await response.json();
     if (user.id) {
+      this.setState({ registerStatus: "Register" });
       this.props.loadUser(user);
       this.props.onRouteChange("home");
     }
   };
 
   render() {
+    
     return (
       <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
         <main className="pa4 black-80">
@@ -91,7 +94,7 @@ class Register extends React.Component {
                 onClick={this.onSubmitSignIn}
                 className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
                 type="submit"
-                value="Register"
+                value={this.state.registerStatus}
               />
             </div>
           </div>
