@@ -95,26 +95,31 @@ class App extends Component {
         }
       );
       const data = await response.json();
-      if (data) {
-       
-        // increase number of entries
-        const response = await fetch(
-          "https://stormy-forest-17045.herokuapp.com/image",
-          {
-            method: "put",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              id: this.state.user.id
-            })
-          }
-        );
-        const count = await response.json();
-        if (count) {
-          this.setState(Object.assign(this.state.user, { entries: count }));
-        }
-        this.displayFaceBox(this.calculateFaceLocations(data));
-         this.setState({ status: "Detect" });
+      console.log('data::', data)
+      if (data === "unable to work with API"){
+        alert("wrong format url image (must be .jpg, .png), please choose other link")
+        this.setState({status: "Detect"})
+        return;
       }
+        if (data) {
+          // increase number of entries
+          const response = await fetch(
+            "https://stormy-forest-17045.herokuapp.com/image",
+            {
+              method: "put",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                id: this.state.user.id
+              })
+            }
+          );
+          const count = await response.json();
+          if (count) {
+            this.setState(Object.assign(this.state.user, { entries: count }));
+          }
+          this.displayFaceBox(this.calculateFaceLocations(data));
+          this.setState({ status: "Detect" });
+        }
     } catch (error) {
       console.log("error image:::", error);
     }
