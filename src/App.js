@@ -32,7 +32,8 @@ const initialState = {
     email: "",
     entries: 0,
     joined: ""
-  }
+  },
+  status: "Detect"
 };
 
 class App extends Component {
@@ -78,7 +79,8 @@ class App extends Component {
 
   onButtonSubmit = async () => {
     try {
-      this.setState({ imageUrl: this.state.input });
+      this.setState({ imageUrl: this.state.input, boxes: [], status:'Please wait...' });
+      
       // fetch face api to get point position
       const response = await fetch(
         "https://stormy-forest-17045.herokuapp.com/imageurl",
@@ -92,6 +94,7 @@ class App extends Component {
       );
       const data = await response.json();
       if (data) {
+       
         // increase number of entries
         const response = await fetch(
           "https://stormy-forest-17045.herokuapp.com/image",
@@ -108,6 +111,7 @@ class App extends Component {
           this.setState(Object.assign(this.state.user, { entries: count }));
         }
         this.displayFaceBox(this.calculateFaceLocations(data));
+         this.setState({ status: "Detect" });
       }
     } catch (error) {
       console.log("error image:::", error);
@@ -140,6 +144,7 @@ class App extends Component {
               entries={this.state.user.entries}
             />
             <ImageLinkForm
+              status={this.state.status}
               onInputChange={this.onInputChange}
               onButtonSubmit={this.onButtonSubmit}
             />
