@@ -4,9 +4,9 @@ import "./ImageLinkForm.css";
 const ImageLinkForm = ({ onInputChange, onButtonSubmit, status }) => {
   return (
     <div>
-      <p className="f3">
+      <p className="f5">
         {
-          "Let put an Image Url containing some people faces and this app will detect faces border in your image. Git it a try!."
+          "Let put an Image Url containing some people faces and this app will detect faces border in your image. Give it a try!"
         }
       </p>
       <div className="center">

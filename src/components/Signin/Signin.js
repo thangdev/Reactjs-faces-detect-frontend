@@ -18,7 +18,7 @@ class Signin extends React.Component {
   };
 
   onSubmitSignIn = async () => {
-    this.setState({signInStatus: "Please wait!"})
+    this.setState({ signInStatus: "Please wait!" });
     const response = await fetch(
       "https://stormy-forest-17045.herokuapp.com/signin",
       {
@@ -31,11 +31,21 @@ class Signin extends React.Component {
       }
     );
     const user = await response.json();
-    if (user.id) {
+    if (user === "wrong credentials") {
+      alert("Wrong username or password!");
       this.setState({ signInStatus: "Sign In" });
-      this.props.loadUser(user);
-      this.props.onRouteChange("home");
+      return;
     }
+    else if (user === 'incorrect form submission'){
+       alert("Do not leave blank fields!");
+       this.setState({ signInStatus: "Sign In" });
+       return;
+    }
+           if (user.id) {
+             this.setState({ signInStatus: "Sign In" });
+             this.props.loadUser(user);
+             this.props.onRouteChange("home");
+           }
   };
 
   render() {
